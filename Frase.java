@@ -13,4 +13,8 @@ public class Frase {
         this.Proposiciones.add(new Proposicion(nombre, negado, argumento));
     }
 
+    public void añadir(Proposicion Proposicion){
+        this.Proposicion.add(Proposicion);
+    }
+
 }

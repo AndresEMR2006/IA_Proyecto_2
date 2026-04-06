@@ -3,10 +3,10 @@ public class Proposicion {
     // Atributos de la clase Proposicion
     public String nombre;
     public Boolean negado;
-    public String argumento;
+    public String[] argumento;
 
     // Constructor de la clase Proposicion
-    public Proposicion(String nombre, Boolean negado, String argumento) {
+    public Proposicion(String nombre, Boolean negado, String[] argumento) {
         this.nombre = nombre;
         this.negado = negado;
         this.argumento = argumento;
