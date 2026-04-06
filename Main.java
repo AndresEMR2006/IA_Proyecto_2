@@ -1,11 +1,13 @@
+/**
+ * Clase principal para ejecutar la validación del Motor de Inferencia.
+ */
 public class Main {
 
     public static void main(String[] args) {
 
         Base base = new Base();
 
-        // Listas
-
+        // Listas de argumentos
         String[] Marco = {"Marco"};
         String[] X = {"X"};
         String[] XY = {"X", "Y"};
@@ -13,13 +15,13 @@ public class Main {
         String[] X_Cesar = {"X", "Cesar"};
         String[] Marco_Cesar = {"Marco", "Cesar"};
 
-        // --------------- Clausulas
+        // --------------- Cláusulas
 
         // C1: Marco es un hombre
         Frase F1 = new Frase();
         F1.añadir(new Proposicion("Hombre", false, Marco));
 
-        // C2: Marco es ponpeyano
+        // C2: Marco es pompeyano
         Frase F2 = new Frase();
         F2.añadir(new Proposicion("Pompeyano", false, Marco));
 
@@ -38,23 +40,22 @@ public class Main {
         F5.añadir(new Proposicion("Ama", false, X_Cesar));
         F5.añadir(new Proposicion("Odia", false, X_Cesar));
 
-        // C6: La gente sólo intenta asesinar a los gobernantes a los que no es leal. (Odia(X,Y) -> IntentaMatar(X,Y)) = (¬odia(X,Y) o IntentaMatar(X,Y))
+        // C6: Si alguien intenta asesinar a alguien, lo odia. (IntentaMatar(X,Y) -> Odia(X,Y)) = (¬IntentaMatar(X,Y) o Odia(X,Y))
         Frase F6 = new Frase();
-        F6.añadir(new Proposicion("Odia", true, XY));
-        F6.añadir(new Proposicion("IntentaMatar", false, XY));
+        F6.añadir(new Proposicion("IntentaMatar", true, XY)); // ¬IntentaMatar
+        F6.añadir(new Proposicion("Odia", false, XY));        // Odia
 
-        // C7: marco intento asesinar a cesar. (IntentoAsesinar(Marco,Cesar))
+        // C7: Marco intento asesinar a cesar. (IntentaMatar(Marco,Cesar))
         Frase F7 = new Frase();
         F7.añadir(new Proposicion("IntentaMatar", false, Marco_Cesar));
 
         // --------------- Fin clausulas
 
-        // Pregunta: ¿Marco odia a Cesar?
+        // Pregunta: ¿Marco odia a Cesar? -> Para la REFUTACIÓN, la pregunta SE NIEGA: ¬Odia(Marco, Cesar)
         Frase Pregunta = new Frase();
-        Pregunta.añadir(new Proposicion("Odia", false, Marco_Cesar));
+        Pregunta.añadir(new Proposicion("Odia", true, Marco_Cesar)); // true = negado (¬Odia)
 
-        // Carga de informacino a la base
-
+        // Carga de informacion a la base
         base.añadir(F1);
         base.añadir(F2);
         base.añadir(F3);
@@ -62,8 +63,10 @@ public class Main {
         base.añadir(F5);
         base.añadir(F6);
         base.añadir(F7);
-        base.añadir(Pregunta);
+        base.añadir(Pregunta); // Añadimos la pregunta negada
         base.setVariables(XY);
 
+        // --- INICIAR EL MOTOR DE INFERENCIA ---
+        MotorInferencia.resolver(base);
     }
 }
