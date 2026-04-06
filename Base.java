@@ -1,16 +1,19 @@
 import java.util.ArrayList;
 
-public class Base{
+/**
+ * Base de conocimiento que almacena el conjunto de cláusulas (Frases).
+ */
+public class Base {
 
-    ArrayList<Frase> Frases;
-    String[] Variables;
+    public ArrayList<Frase> Frases;
+    public String[] Variables;
 
     public Base() {
         Frases = new ArrayList<>();
         Variables = new String[]{};
     }
 
-    public Base(String nombre, Boolean negado, String argumento) {
+    public Base(String nombre, Boolean negado, String[] argumento) {
         Variables = new String[]{};
         this.Frases = new ArrayList<>();
         this.Frases.add(new Frase(nombre, negado, argumento));
@@ -23,5 +26,4 @@ public class Base{
     public void setVariables(String[] Variables){
         this.Variables = Variables;
     }
-
 }
